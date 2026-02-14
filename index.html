@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Keya</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        background-color: #ffe6e6;
+        text-align: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden; /* Scroll bondho thakbe */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        color: #ff3366;
+        font-size: 2.5em;
+        margin-bottom: 40px;
+        text-shadow: 2px 2px 5px rgba(255, 105, 180, 0.4);
+        z-index: 10;
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        margin: 10px;
+        position: relative;
+    }
+
+    #loveBtn {
+        background-color: #ff3366;
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+    }
+
+    #loveBtn:hover {
+        transform: scale(1.1);
+        background-color: #e6004c;
+    }
+
+    #hateBtn {
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #ccc;
+    }
+
+    /* Animation Elements (Love, Rose, Text) */
+    .falling-element {
+        position: fixed;
+        top: -10%;
+        z-index: 5;
+        animation: fall linear forwards;
+        user-select: none; /* Select kora jabe na */
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="mainTitle">I LOVE YOU KEYA 😌🌹</h1>
+
+        <button id="loveBtn" onclick="startCelebration()">I LOVE YOU 2 😌🌹</button>
+        
+        <button id="hateBtn" onmouseover="moveButton()" ontouchstart="moveButton()">I HATE YOU</button>
+    </div>
+
+    <script>
+        // 1. Hate Button Palano Logic
+        function moveButton() {
+            var btn = document.getElementById('hateBtn');
+            // Screen er width height onujayi random jayga
+            var x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            var y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.position = 'fixed'; // Fixed position jate nordshe pare
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // 2. Love Button Logic (Celebration)
+        function startCelebration() {
+            // Button gulo lukiye felbo sundor dekahneor jonno
+            document.querySelector('.container').style.display = 'none';
+
+            // Background change hoye jabe
+            document.body.style.background = "#fff0f5";
+
+            // Proti 100ms por por element create hobe
+            setInterval(createFallingItems, 100);
+        }
+
+        function createFallingItems() {
+            const elements = ["❤️", "🌹", "💖", "I LOVE YOU KEYA", "💕", "😍"];
+            const item = document.createElement("div");
+
+            // Randomly ekta element choose korbe list theke
+            const randomContent = elements[Math.floor(Math.random() * elements.length)];
+            
+            item.innerText = randomContent;
+            item.classList.add("falling-element");
+
+            // Style setup
+            item.style.left = Math.random() * 100 + "vw"; // Screen er random width e porbe
+            
+            // Size random hobe (Text hole font size barano hobe)
+            if(randomContent === "I LOVE YOU KEYA") {
+                item.style.fontSize = (Math.random() * 20 + 20) + "px"; // 20px - 40px
+                item.style.color = "#ff3366";
+                item.style.fontWeight = "bold";
+                item.style.fontFamily = "cursive";
+            } else {
+                item.style.fontSize = (Math.random() * 30 + 20) + "px"; // Emoji size
+            }
+
+            // Animation speed random hobe (2s theke 5s)
+            item.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+            document.body.appendChild(item);
+
+            // Memory clear korar jonno kichu khon por element remove kora
+            setTimeout(() => {
+                item.remove();
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
